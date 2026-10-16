@@ -48,7 +48,7 @@ Inline formatting applies to a span of characters _inside_ a paragraph.
 - `*text*` or `_text_` - _italic_
 - `` `text` `` - `inline code`, rendered in a monospace font
 
-Strikethrough (`~~text~~`) is **not** part of the CommonMark core - it is a GitHub Flavored Markdown extension, covered under [Markdown flavors](#markdown-flavors) below.
+Strikethrough (`~~text~~`) is **not** part of the CommonMark core - it is a GitHub Flavored Markdown extension. It is always enabled, so it works with both [Markdown flavors](#markdown-flavors) below.
 
 :::caution
 With certain extensions enabled, the meaning of `__text__` and `_text_` may change. The `*` syntax never changes, so it is the safer choice. Learn more about [`md4cFlags`](/react-native/api-reference/enriched-markdown-text#md4cflags).
@@ -137,8 +137,8 @@ Three or more `-`, `*`, or `_` on their own line render a divider.
 
 There is a small CommonMark core that every Markdown parser agrees on (everything above), plus optional extensions layered on top. The React Native package exposes this through the `flavor` prop:
 
-- **CommonMark** (default) - the standard core syntax.
-- **GitHub Flavored Markdown (GFM)** - CommonMark plus **tables**, **task lists**, **strikethrough** and much more. Opt in with `flavor="github"`.
+- **CommonMark** (default) - the standard core syntax, plus strikethrough.
+- **GitHub Flavored Markdown (GFM)** - CommonMark plus **tables**, **task lists** and much more. Opt in with `flavor="github"`.
 
 ```tsx
 <EnrichedMarkdownText flavor="github" markdown={markdown} />

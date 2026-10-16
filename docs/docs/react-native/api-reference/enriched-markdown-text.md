@@ -149,7 +149,7 @@ When `true`, parses `^text^` as superscript.
 
 #### `subscript`
 
-When `true`, parses `~text~` as subscript. When disabled, `~` means nothing on its own; `~~text~~` is strikethrough, but only under [`flavor="github"`](#flavor) - under `commonmark` the tildes render literally.
+When `true`, parses `~text~` as subscript. When disabled, `~text~` is parsed as strikethrough. `~~text~~` is always strikethrough, in both flavors.
 
 <PropInfo type="boolean" default="false" />
 

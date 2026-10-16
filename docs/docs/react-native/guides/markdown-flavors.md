@@ -30,15 +30,14 @@ The most widely used of these supersets is **GitHub Flavored Markdown ([GFM](htt
 
 This is the canonical list of everything `flavor="github"` changes. The other pages link here rather than repeating it.
 
-**At parse time**, three extensions switch on:
+**At parse time**, two extensions switch on:
 
 | Feature | Syntax |
 |---|---|
 | **Tables** | `\| col \| col \|`<br />`\| --- \| --- \|` |
 | **Task lists** | `- [x] done`, `- [ ] todo` |
-| **Strikethrough** | `~~text~~` |
 
-In `commonmark` these stay literal - `~~text~~` renders as tildes and a `| a | b |` line is just text. A fourth parser flag, [`admonitions`](/react-native/api-reference/enriched-markdown-text#admonitions), is on by default but **forced off** under `commonmark`, so `> [!NOTE]` is a GitHub-only callout in practice too.
+In `commonmark` these stay literal - a `| a | b |` line is just text. Strikethrough (`~~text~~`) is a GFM extension too, but it is always on, in both flavors. A third parser flag, [`admonitions`](/react-native/api-reference/enriched-markdown-text#admonitions), is on by default but **forced off** under `commonmark`, so `> [!NOTE]` is a GitHub-only callout in practice too.
 
 **At render time**, `github` additionally unlocks:
 
@@ -57,7 +56,7 @@ In `commonmark` these stay literal - `~~text~~` renders as tildes and a `| a | b
 - A text selection cannot span two segments, and the selection offsets handed to [`contextMenuItems`](/react-native/api-reference/enriched-markdown-text#contextmenuitems) are relative to the segment, not the whole string.
 
 :::note
-Bare-URL autolinking and spoilers (`||text||`) are always on, independent of the flavor, and `<video>` is promoted in both flavors even though only `github` renders a player. See [LaTeX math](/rich-text-formatting/latex-math) for the math details.
+Bare-URL autolinking, strikethrough (`~~text~~`) and spoilers (`||text||`) are always on, independent of the flavor, and `<video>` is promoted in both flavors even though only `github` renders a player. See [LaTeX math](/rich-text-formatting/latex-math) for the math details.
 :::
 
 ## More than extensions: how the flavor renders
@@ -92,8 +91,8 @@ The flag set also carries `latexMath` and `admonitions` (both on by default) and
 
 Putting it together, three layers decide which syntax the parser recognizes:
 
-1. **CommonMark core** - always parsed: headings, emphasis, lists, links, blockquotes, code, and images (everything in [Core concepts](/introduction/core-concepts)), plus two always-on extras: bare-URL autolinks and spoilers.
-2. **The flavor** - `flavor="github"` adds the GFM extensions above (tables, task lists, strikethrough); `flavor="commonmark"` leaves them off.
+1. **CommonMark core** - always parsed: headings, emphasis, lists, links, blockquotes, code, and images (everything in [Core concepts](/introduction/core-concepts)), plus three always-on extras: bare-URL autolinks, strikethrough and spoilers.
+2. **The flavor** - `flavor="github"` adds the GFM extensions above (tables, task lists); `flavor="commonmark"` leaves them off.
 3. **`md4cFlags`** - layer extra inline extensions on top of either flavor (underline, superscript, subscript, highlight) and tune math, admonitions and newline handling (`latexMath`, `admonitions`, `hardSoftBreaks`, `preserveBlankLines`). `admonitions` is the exception to "on top of either flavor": it is forced off under `commonmark`.
 
 For a given `(flavor, md4cFlags)` pair the same string always parses the same way - those are the only inputs that change which syntax is recognized.
@@ -102,7 +101,8 @@ For a given `(flavor, md4cFlags)` pair the same string always parses the same wa
 
 Mapping the rich text features back to the three layers above - what each one needs to be switched on:
 
-- **Tables, task lists, strikethrough** - the GFM extensions covered above; `flavor="github"`.
+- **Tables, task lists** - the GFM extensions covered above; `flavor="github"`.
+- **Strikethrough** - always on, in both flavors.
 - **Admonitions** - the `admonitions` flag (on by default) **and** `flavor="github"`.
 - [**LaTeX math**](/rich-text-formatting/latex-math) - the `latexMath` flag (on by default); block equations also need `flavor="github"`. Rendering additionally needs the native math engine, which the `enableMath` [build flag](/react-native/guides/native-assets#optional-features) includes by default.
 - [**Editor-style text**](/rich-text-formatting/editor-style-text) - the `hardSoftBreaks` and `preserveBlankLines` flags.

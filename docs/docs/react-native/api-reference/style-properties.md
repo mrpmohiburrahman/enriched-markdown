@@ -385,7 +385,7 @@ Pills are drawn by the native text stack, so `pill` applies on **iOS and Android
 
 ### Strikethrough-specific
 
-Strikethrough (`~~text~~`) is a GitHub Flavored Markdown extension, so these styles only apply under [`flavor="github"`](/react-native/api-reference/enriched-markdown-text#flavor).
+Strikethrough (`~~text~~`) is a GitHub Flavored Markdown extension. It is always enabled, so these styles apply under both [flavors](/react-native/api-reference/enriched-markdown-text#flavor).
 
 | Property | Type     | Default   | Description                                                                       |
 | -------- | -------- | --------- | --------------------------------------------------------------------------------- |
@@ -568,7 +568,7 @@ Styles for superscript text (`^text^`). Requires [`md4cFlags={{ superscript: tru
 
 ### Subscript-specific
 
-Styles for subscript text (`~text~`). Requires [`md4cFlags={{ subscript: true }}`](/react-native/api-reference/enriched-markdown-text#subscript) to enable the parser. Note that single tildes mean nothing by default: `~text~` is literal text until this flag turns it into subscript. Double tildes (`~~text~~`) are strikethrough, and only under [`flavor="github"`](/react-native/api-reference/enriched-markdown-text#flavor).
+Styles for subscript text (`~text~`). Requires [`md4cFlags={{ subscript: true }}`](/react-native/api-reference/enriched-markdown-text#subscript) to enable the parser. Without this flag, a single-tilde pair (`~text~`) is parsed as strikethrough. Double tildes (`~~text~~`) are always strikethrough.
 
 | Property              | Type     | Default                                  | Description                                                        |
 | --------------------- | -------- | ---------------------------------------- | ------------------------------------------------------------------ |
